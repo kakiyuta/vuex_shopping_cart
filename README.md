@@ -1,5 +1,11 @@
 # vuex_shopping_cart
 
+# 概要
+
+Vuexを使用したショッピングアプリケーション。
+以下を参考に作成
+https://github.com/vuejs/vuex/tree/dev/examples/shopping-cart
+
 ## Project setup
 ```
 npm install

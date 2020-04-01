@@ -8,6 +8,7 @@
       :key="product.id"
     >
       {{ product.title }} - {{ product.price | currency }} x {{ product.quantity }}
+      <button @click="removeProductFromCart(product)">Remove</button>
     </li>
     <p>Total: {{ total | currency }}</p>
     <p><button :disabled="!products.length" @click="checkout(products)">Checkout</button></p>
@@ -17,7 +18,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 
 export default {
   computed: {
@@ -30,6 +31,9 @@ export default {
     })
   },
   methods: {
+    ...mapActions('cart', [
+      'removeProductFromCart'
+    ]),
     checkout (products) {
       this.$store.dispatch('cart/checkout', products);
     }

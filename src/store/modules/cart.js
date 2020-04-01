@@ -12,6 +12,7 @@ const getters = {
     return state.items.map(({id, quantity}) => {
       const product = rootState.products.all.find(product => product.id === id);
       return {
+        id: product.id,
         title: product.title,
         price: product.price,
         quantity
@@ -46,6 +47,17 @@ const mutations = {
 
   setCheckoutStatus (state, status) {
     state.checkoutStatus = status;
+  },
+
+  decrementCartItem (state, {id}) {
+    const cartItem = state.items.find(item => item.id === id);
+    cartItem.quantity--;
+  },
+
+  removeCartItem (state, {id}) {
+    state.items = state.items.filter((item) => {
+      return item.id !== id;
+    });
   }
 }
 
@@ -78,6 +90,19 @@ const actions = {
       // 在庫を減らす
       commit('products/decrementProductInventory', {id: product.id}, {root:true});
     }
+  },
+
+  removeProductFromCart ({commit}, item) {
+    if (item.quantity > 1) {
+      // 個数を減らす
+      commit('decrementCartItem', item);
+    }
+    else {
+      // カートから削除
+      commit('removeCartItem', item);
+    }
+    // 在庫を増やす（に戻す）
+    commit('products/incrementProductInventory', {id: item.id}, {root:true});
   }
 }
 

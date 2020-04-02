@@ -13,6 +13,8 @@
       >
         Add to cart
       </button>
+      &emsp;-&emsp;
+      inventory:{{product.inventory}}
     </li>
   </ul>
 </div>
